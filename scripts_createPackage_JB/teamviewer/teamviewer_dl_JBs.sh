@@ -23,7 +23,7 @@
 # Script: Script to build a Slackware package of teamviewer
 # Based in: http://slackbuilds.org/repository/14.2/network/teamviewer/
 #
-# Last update: 13/02/2021
+# Last update: 24/02/2021
 #
 echo "This script create a txz version from teamviewer_arch.deb"
 
@@ -31,7 +31,7 @@ if [ "$USER" != "root" ]; then
     echo -e "\\nNeed to be superuser (root)\\nExiting\\n"
 else
     progName="teamviewer" # last tested: "15.15.2"
-    tag="1_JB"
+    tag="2_JB"
 
     folderDest=$(pwd)
     folderTmp="$folderDest/${progName}_tmp"
@@ -111,10 +111,10 @@ else
     # Delete deb "legacy" from apt
     rm -r "$folderTmp/etc/apt"
 
-    # Move docs to official place
+    # Copy docs to official/usual place
     mkdir -p "$folderTmp/usr/doc/$progName/"
-    mv "$folderTmp"/opt/teamviewer/doc/*txt "$folderTmp/usr/doc/$progName/"
-    rm -r "$folderTmp/opt/teamviewer/doc/"
+    cp "$folderTmp"/opt/teamviewer/doc/*txt "$folderTmp/usr/doc/$progName/"
+    #rm -r "$folderTmp/opt/teamviewer/doc/" # Was given error "EULA failed to load"
 
     mkdir -p $folderTmp/etc/rc.d/
     install -m 0644 $folderDest/rc.teamviewerd $folderTmp/etc/rc.d/rc.teamviewerd
